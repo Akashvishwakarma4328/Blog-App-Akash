@@ -1,16 +1,27 @@
 import React, { useState } from 'react'
 
 const RegisterPage = () => {
-    const[userName,setuserName] = useState('');
-    const [password,setpassword] = useState('');
+    const [username, setuserName] = useState('');
+    const [password, setpassword] = useState('');
 
-    async function register(event){
+    async function register(event) {
         event.preventDefault();
-        await fetch('http://localhost:4000/register',{
-            method:'Post',
-            body:JSON.stringify({userName,password}),
-            headers:{'Content-type':'application/json'}
+
+
+        const response = await fetch('http://localhost:4000/register', {
+            method: 'Post',
+            body: JSON.stringify({ username: username, password: password }),
+            headers: { 'Content-type': 'application/json' }
         })
+
+        if (response.status === 200) {
+            alert("Registration Sucessfull")
+        } else {
+            alert("Registration got failed");
+        }
+
+
+
 
     }
     return (
@@ -18,11 +29,11 @@ const RegisterPage = () => {
             <form className='register' onSubmit={register}>
                 <h1> Register</h1>
                 <input type="text" placeholder='UserName'
-                 value={userName} 
-                 onChange={event => setuserName(event.target.value)} />
-                <input type='text' placeholder='Password' 
-                value={password} 
-                onChange={event => setpassword(event.target.value)} />
+                    value={username}
+                    onChange={event => setuserName(event.target.value)} />
+                <input type='password' placeholder='Password'
+                    value={password}
+                    onChange={event => setpassword(event.target.value)} />
                 <button>Register</button>
             </form>
         </div>
